@@ -1,0 +1,33 @@
+# LoRA fine-tuning of ViT-B/16 on Food-101
+# Replicates rezaakb/peft-vit configs/lora/food101.yaml
+# r=4 → ~301K trainable parameters
+
+trainer:
+  accelerator: gpu
+  devices: 1
+  precision: 16-mixed
+  max_steps: 5000
+  val_check_interval: 500
+  log_every_n_steps: 50
+
+model:
+  model_name: vit-b16-224-in21k
+  optimizer: sgd
+  lr: 0.01
+  momentum: 0.9
+  weight_decay: 0.0
+  warmup_steps: 500
+  # LoRA config
+  lora_r: 4
+  lora_alpha: 8
+  lora_dropout: 0.1
+  lora_target_modules:
+    - query
+    - value
+
+data:
+  dataset: food101
+  data_dir: data/
+  batch_size: 128
+  num_workers: 4
+  image_size: 224
