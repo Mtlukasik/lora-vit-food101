@@ -201,3 +201,14 @@ out_path = os.path.join(run_dir, 'laplace_results.json')
 with open(out_path, 'w') as f:
     json.dump(results, f, indent=2)
 print(f'\nResults saved to {out_path}')
+
+# ── Save Laplace object ───────────────────────────────────────────────────────
+import pickle
+la_pkl_path = os.path.join(run_dir, 'laplace.pkl')
+with open(la_pkl_path, 'wb') as f:
+    pickle.dump(la, f)
+print(f'Laplace object saved to {la_pkl_path}')
+print('\nTo reload later (no refitting needed):')
+print('  import pickle')
+print('  with open("laplace.pkl", "rb") as f: la = pickle.load(f)')
+print('  probs = la(imgs, pred_type="glm", link_approx="probit")')
